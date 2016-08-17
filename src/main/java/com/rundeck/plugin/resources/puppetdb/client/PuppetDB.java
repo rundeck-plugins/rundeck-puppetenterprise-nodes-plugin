@@ -15,8 +15,8 @@ public class PuppetDB {
 
     private final PuppetAPI puppetAPI;
 
-    public static PuppetDB create(final HTTP http) {
-        return new PuppetDB(new DefaultPuppetAPI(http));
+    public PuppetDB(final HTTP http) {
+        this.puppetAPI = new DefaultPuppetAPI(http);
     }
 
     public PuppetDB(final PuppetAPI puppetAPI) {
