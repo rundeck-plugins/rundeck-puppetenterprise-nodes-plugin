@@ -11,7 +11,7 @@ import com.dtolabs.rundeck.core.common.NodeSetImpl;
 import com.dtolabs.rundeck.core.resources.ResourceModelSource;
 import com.dtolabs.rundeck.core.resources.ResourceModelSourceException;
 import com.rundeck.plugin.resources.puppetdb.client.PuppetDB;
-import com.rundeck.plugin.resources.puppetdb.client.model.CertNodeClass;
+import com.rundeck.plugin.resources.puppetdb.client.model.CertNodeResource;
 import com.rundeck.plugin.resources.puppetdb.client.model.Node;
 import com.rundeck.plugin.resources.puppetdb.client.model.NodeFact;
 import com.rundeck.plugin.resources.puppetdb.client.model.PuppetDBNode;
@@ -22,7 +22,7 @@ import com.rundeck.plugin.resources.puppetdb.client.model.PuppetDBNode;
 class PuppetDBResourceModelSource implements ResourceModelSource {
     private final Mapper mapper;
     private final Map<String, Object> mapping;
-    private final boolean includeClasses;
+    private final String resourceTag;
     private final String userQuery;
     PuppetDB pdb;
 
@@ -30,14 +30,14 @@ class PuppetDBResourceModelSource implements ResourceModelSource {
             final PuppetDB pdb,
             final Mapper mapper,
             final Map<String, Object> mapping,
-            final boolean includeClasses,
+            final String resourceTag,
             final String userQuery
     )
     {
         this.pdb = pdb;
         this.mapper = mapper;
         this.mapping = mapping;
-        this.includeClasses = includeClasses;
+        this.resourceTag = resourceTag;
         this.userQuery = userQuery;
     }
 
@@ -52,13 +52,11 @@ class PuppetDBResourceModelSource implements ResourceModelSource {
         Set<String> factNames = mapper.determineFactNames(mapping);
 
         List<NodeFact> factSet = pdb.getPuppetAPI().getFactSet(factNames, userQuery);
-
-        final List<CertNodeClass> nodeClasses = includeClasses
-                                                ? pdb.getPuppetAPI().getClassesForAllNodes(userQuery)
-                                                : Collections.<CertNodeClass>emptyList();
-
+        final List<CertNodeResource> nodeResources = resourceTag != null 
+                                                ? pdb.getPuppetAPI().getResourcesForAllNodes(userQuery, resourceTag)
+                                                : Collections.<CertNodeResource>emptyList();
         // build nodes with facts and tags attached
-        final List<PuppetDBNode> puppetNodes = pdb.getPuppetDBNodes(nodes, factSet, nodeClasses);
+        final List<PuppetDBNode> puppetNodes = pdb.getPuppetDBNodes(nodes, factSet, nodeResources);
         final List<INodeEntry> rundeckNodes = mapper.convertNodes(puppetNodes, mapping);
 
         final NodeSetImpl nodeSet = new NodeSetImpl();

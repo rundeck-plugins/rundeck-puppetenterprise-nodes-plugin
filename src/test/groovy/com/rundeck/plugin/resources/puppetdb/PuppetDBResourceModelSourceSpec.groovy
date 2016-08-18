@@ -20,7 +20,7 @@ class PuppetDBResourceModelSourceSpec extends Specification {
                 ,
                 mapper,
                 mapping,
-                true,
+                "Class",
                 null
         )
 
@@ -49,7 +49,7 @@ class PuppetDBResourceModelSourceSpec extends Specification {
                 ,
                 mapper,
                 mapping,
-                true,
+                "Class",
                 null
         )
 
@@ -60,7 +60,7 @@ class PuppetDBResourceModelSourceSpec extends Specification {
         nfact.setEnvironment('production')
         nfact.setName('blah')
         nfact.setValue('blee')
-        def nclass = new CertNodeClass(certname: 'test1', title: 'A[class]')
+        def nclass = new CertNodeResource(certname: 'test1', title: 'A[class]')
 
         def resnode = new PuppetDBNode(node,[nfact],[nclass])
 
@@ -70,7 +70,7 @@ class PuppetDBResourceModelSourceSpec extends Specification {
         then:
         1 * api.getNodes(_) >> [node]
         1 * api.getFactSet(_, _) >> [nfact]
-        1 * api.getClassesForAllNodes(_) >> [nclass]
+        1 * api.getResourcesForAllNodes(_, _) >> [nclass]
         result!=null
         result.nodeNames.contains("test1")
         result.getNode("test1") != null

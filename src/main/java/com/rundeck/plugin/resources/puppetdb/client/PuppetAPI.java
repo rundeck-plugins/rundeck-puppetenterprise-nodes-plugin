@@ -3,10 +3,10 @@ package com.rundeck.plugin.resources.puppetdb.client;
 import java.util.List;
 import java.util.Set;
 
-import com.rundeck.plugin.resources.puppetdb.client.model.CertNodeClass;
+import com.rundeck.plugin.resources.puppetdb.client.model.CertNodeResource;
 import com.rundeck.plugin.resources.puppetdb.client.model.Fact;
 import com.rundeck.plugin.resources.puppetdb.client.model.Node;
-import com.rundeck.plugin.resources.puppetdb.client.model.NodeClass;
+import com.rundeck.plugin.resources.puppetdb.client.model.NodeResource;
 import com.rundeck.plugin.resources.puppetdb.client.model.NodeFact;
 
 
@@ -31,14 +31,14 @@ public interface PuppetAPI {
      * @param node
      * @return
      */
-    public List<NodeClass> getClassesForNode(final Node node);
+    public List<NodeResource> getResourcesForNode(final Node node, String resource);
 
     /**
      * Get classes for all queried nodes
      * @return
      * @param userQuery
      */
-    public List<CertNodeClass> getClassesForAllNodes(final String userQuery);
+    public List<CertNodeResource> getResourcesForAllNodes(final String userQuery, String resource);
 
     /**
      * Get all selected facts for the queried nodes

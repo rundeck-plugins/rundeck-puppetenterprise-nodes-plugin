@@ -92,7 +92,7 @@ public class ResourceModelFactory implements ResourceModelSourceFactory, Describ
                 pdb,
                 mapper,
                 mapping,
-                PropertyHandling.readBoolean(properties, PROPERTY_INCLUDE_CLASSES, false),
+                PropertyHandling.readPuppetRessourceTag(properties).orNull(),
                 PropertyHandling.readPuppetDbQuery(properties).orNull()
         );
     }

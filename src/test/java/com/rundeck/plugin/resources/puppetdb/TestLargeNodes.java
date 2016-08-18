@@ -42,7 +42,7 @@ public class TestLargeNodes {
         PuppetDB db = new PuppetDB(testApi);
         this.mapping = getMapping("simple/known_mapping.json");
         final ImmutableList<PuppetDBNode> nodesWithFacts = FluentIterable.from(testApi.getNodes(null))
-                                                                         .transform(db.queryNode())
+                                                                         .transform(db.queryNode("Class"))
                                                                          .toList();
 
         final PuppetDBNode puppetDBNode = nodesWithFacts.get(0);
@@ -61,7 +61,7 @@ public class TestLargeNodes {
         this.mapping = getMapping("simple/known_mapping_with_missing_property.json");
         long now = System.currentTimeMillis();
         final ImmutableList<PuppetDBNode> nodesWithFacts = FluentIterable.from(testApi.getNodes(null))
-                                                                         .transform(db.queryNode())
+                                                                         .transform(db.queryNode("Class"))
                                                                          .toList();
 
         System.out.println("dur " + (System.currentTimeMillis() - now));
@@ -109,7 +109,7 @@ public class TestLargeNodes {
             }
 
             @Override
-            public List<CertNodeClass> getClassesForAllNodes(final String userQuery) {
+            public List<CertNodeResource> getResourcesForAllNodes(final String userQuery, final String resourceTag) {
                 return null;
             }
 
@@ -136,8 +136,8 @@ public class TestLargeNodes {
             }
 
             @Override
-            public List<NodeClass> getClassesForNode(final Node node) {
-                return gson.fromJson(readFile("simple/classes.json"), NodeClass.LIST);
+            public List<NodeResource> getResourcesForNode(final Node node, final String resourceTag) {
+                return gson.fromJson(readFile("simple/classes.json"), NodeResource.LIST);
             }
         };
     }

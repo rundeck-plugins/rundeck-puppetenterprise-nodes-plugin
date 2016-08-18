@@ -7,15 +7,15 @@ import com.google.common.base.Function;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class NodeClass {
+public class NodeResource {
 
-    public static final Type LIST = new TypeToken<List<NodeClass>>() {}.getType();
+    public static final Type LIST = new TypeToken<List<NodeResource>>() {}.getType();
 
-    public static Function<String, List<NodeClass>> parser(final Gson gson) {
-        return new Function<String, List<NodeClass>>() {
+    public static Function<String, List<NodeResource>> parser(final Gson gson) {
+        return new Function<String, List<NodeResource>>() {
             @Override
-            public List<NodeClass> apply(final String input) {
-                return gson.fromJson(input, NodeClass.LIST);
+            public List<NodeResource> apply(final String input) {
+                return gson.fromJson(input, NodeResource.LIST);
             }
 
         };

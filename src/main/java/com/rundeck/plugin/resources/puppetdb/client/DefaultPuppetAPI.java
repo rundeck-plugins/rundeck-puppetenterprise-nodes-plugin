@@ -66,22 +66,23 @@ public class DefaultPuppetAPI implements PuppetAPI, Constants {
     }
 
     @Override
-    public List<NodeClass> getClassesForNode(final Node node) {
-        final String path = format("pdb/query/v4/nodes/%s/resources/Class", node.getCertname());
+    public List<NodeResource> getResourcesForNode(final Node node, final String resourceTag) {
+        final String path = format("pdb/query/v4/nodes/%s/resources/%s", node.getCertname(), resourceTag);
 
         return http.makeRequest(
                 path,
-                NodeClass.parser(GSON),
-                Collections.<NodeClass>emptyList(),
+                NodeResource.parser(GSON),
+                Collections.<NodeResource>emptyList(),
                 "getClassesForNode()"
         );
     }
 
-    public List<CertNodeClass> getClassesForAllNodes(final String userQuery) {
-        final String path = "pdb/query/v4/resources/Class" + getUserQuery(userQuery);
+    @Override
+    public List<CertNodeResource> getResourcesForAllNodes(final String userQuery, final String resourceTag) {
+        final String path = format("pdb/query/v4/resources/%s%s", resourceTag, getUserQuery(userQuery));
         return http.makeRequest(
                 path,
-                CertNodeClass.listParser(GSON), Collections.<CertNodeClass>emptyList(), "getClassesForAllNodes()"
+                CertNodeResource.listParser(GSON), Collections.<CertNodeResource>emptyList(), "getClassesForAllNodes()"
         );
     }
 

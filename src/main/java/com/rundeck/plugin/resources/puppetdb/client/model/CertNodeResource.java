@@ -10,14 +10,14 @@ import java.util.List;
 /**
  * Created by greg on 3/8/16.
  */
-public class CertNodeClass extends NodeClass implements Certname{
-    public static final Type LIST = new TypeToken<List<CertNodeClass>>() {}.getType();
+public class CertNodeResource extends NodeResource implements Certname{
+    public static final Type LIST = new TypeToken<List<CertNodeResource>>() {}.getType();
 
-    public static Function<String, List<CertNodeClass>> listParser(final Gson gson) {
-        return new Function<String, List<CertNodeClass>>() {
+    public static Function<String, List<CertNodeResource>> listParser(final Gson gson) {
+        return new Function<String, List<CertNodeResource>>() {
             @Override
-            public List<CertNodeClass> apply(final String input) {
-                return gson.fromJson(input, CertNodeClass.LIST);
+            public List<CertNodeResource> apply(final String input) {
+                return gson.fromJson(input, CertNodeResource.LIST);
             }
 
         };

@@ -13,7 +13,7 @@ public class PuppetDBNode implements Certname{
 
     public PuppetDBNode(final Node node,
                         final List<? extends Fact> facts,
-                        final List<? extends NodeClass> nodeClasses) {
+                        final List<? extends NodeResource> nodeClasses) {
         this.node = node;
 
         this.facts = new LinkedHashMap<>();
@@ -22,7 +22,7 @@ public class PuppetDBNode implements Certname{
         }
 
         this.classes = new LinkedList<>();
-        for (final NodeClass nodeClass : nodeClasses) {
+        for (final NodeResource nodeClass : nodeClasses) {
             this.classes.add(nodeClass.getTitle());
         }
     }

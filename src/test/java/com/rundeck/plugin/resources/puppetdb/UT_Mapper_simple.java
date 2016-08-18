@@ -42,7 +42,7 @@ public class UT_Mapper_simple {
         PuppetDB db = new PuppetDB(testApi);
         final ImmutableList<PuppetDBNode> nodesWithFacts = FluentIterable
                 .from(testApi.getNodes(null))
-                .transform(db.queryNode())
+                .transform(db.queryNode("Class"))
                 .toList();
 
         final PuppetDBNode puppetDBNode = nodesWithFacts.get(0);
@@ -60,7 +60,7 @@ public class UT_Mapper_simple {
         this.mapping = getMapping("simple/known_mapping_with_missing_property.json");
         PuppetDB db = new PuppetDB(testApi);
         final ImmutableList<PuppetDBNode> nodesWithFacts = FluentIterable.from(testApi.getNodes(null))
-                .transform(db.queryNode())
+                .transform(db.queryNode("Class"))
                 .toList();
 
         final PuppetDBNode puppetDBNode = nodesWithFacts.get(0);
@@ -102,7 +102,7 @@ public class UT_Mapper_simple {
     public PuppetAPI testApi() {
         return new PuppetAPI() {
             @Override
-            public List<CertNodeClass> getClassesForAllNodes(final String userQuery) {
+            public List<CertNodeResource> getResourcesForAllNodes(final String userQuery, final String resourceTag) {
                 return null;
             }
 
@@ -122,8 +122,8 @@ public class UT_Mapper_simple {
             }
 
             @Override
-            public List<NodeClass> getClassesForNode(final Node node) {
-                return gson.fromJson(readFile("simple/classes.json"), NodeClass.LIST);
+            public List<NodeResource> getResourcesForNode(final Node node, final String resourceTag) {
+                return gson.fromJson(readFile("simple/classes.json"), NodeResource.LIST);
             }
         };
     }

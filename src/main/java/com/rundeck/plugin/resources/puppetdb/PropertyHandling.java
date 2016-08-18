@@ -29,11 +29,17 @@ public final class PropertyHandling implements Constants {
 
         return Optional.of(value);
     }
+    
     public static Optional<String> readDefaultNodeTag(final Properties properties) {
         return optionalString(properties, PROPERTY_DEFAULT_NODE_TAG);
     }
+    
     public static Optional<String> readPuppetDbQuery(final Properties properties) {
         return optionalString(properties, PROPERTY_NODE_QUERY);
+    }
+
+    public static Optional<String> readPuppetRessourceTag(final Properties properties) {
+        return optionalString(properties, PROPERTY_TAGS_SOURCE);
     }
 
     public static String getPropertyTitle(final String propertyName, final String defaultTitle) {

@@ -1,20 +1,26 @@
 package com.rundeck.plugin.resources.puppetdb;
 
-import com.google.common.base.Optional;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.rundeck.plugin.resources.puppetdb.client.PuppetAPI;
-import com.rundeck.plugin.resources.puppetdb.client.model.*;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.util.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import com.google.common.base.Optional;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.rundeck.plugin.resources.puppetdb.client.PuppetAPI;
+import com.rundeck.plugin.resources.puppetdb.client.model.CertNodeResource;
+import com.rundeck.plugin.resources.puppetdb.client.model.Fact;
+import com.rundeck.plugin.resources.puppetdb.client.model.Node;
+import com.rundeck.plugin.resources.puppetdb.client.model.NodeFact;
+import com.rundeck.plugin.resources.puppetdb.client.model.NodeResource;
 
 /**
  * Created by greg on 3/7/16.
@@ -57,7 +63,7 @@ public class TestDetermineFactNames {
     public PuppetAPI testApi() {
         return new PuppetAPI() {
             @Override
-            public List<CertNodeClass> getClassesForAllNodes(final String userQuery) {
+            public List<CertNodeResource> getResourcesForAllNodes(final String userQuery, final String resourceTag) {
                 return null;
             }
 
@@ -77,8 +83,8 @@ public class TestDetermineFactNames {
             }
 
             @Override
-            public List<NodeClass> getClassesForNode(final Node node) {
-                return gson.fromJson(readFile("simple/classes.json"), NodeClass.LIST);
+            public List<NodeResource> getResourcesForNode(final Node node, final String resourceTag) {
+                return gson.fromJson(readFile("simple/classes.json"), NodeResource.LIST);
             }
         };
     }
@@ -93,9 +99,8 @@ public class TestDetermineFactNames {
         } catch (Exception ex) {
             System.err.println("can't read file: " + name);
             ex.printStackTrace(System.err);
+            return null;
         }
-
-        return "";
     }
 
 }

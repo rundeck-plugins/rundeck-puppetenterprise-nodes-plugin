@@ -43,7 +43,7 @@ public class UT_Mapper_nested_null {
         final List<Node> nodes = testApi.getNodes(null);
 
         final List<PuppetDBNode> nodesWithFacts = FluentIterable.from(nodes)
-            .transform(db.queryNode())
+            .transform(db.queryNode("Class"))
             .toList();
 
         for (int i = 0; i < nodesWithFacts.size(); i++) {
@@ -70,11 +70,11 @@ public class UT_Mapper_nested_null {
         final String prefix = "nested_null";
         final List<Node> nodes = gson.fromJson(readFile(prefix + "/nodes.json"), Node.LIST);
         final List<Fact> facts = gson.fromJson(readFile(prefix + "/facts.json"), Fact.LIST);
-        final List<NodeClass> classes = gson.fromJson(readFile(prefix + "/classes.json"), NodeClass.LIST);
+        final List<NodeResource> classes = gson.fromJson(readFile(prefix + "/classes.json"), NodeResource.LIST);
 
         return new PuppetAPI() {
             @Override
-            public List<CertNodeClass> getClassesForAllNodes(final String userQuery) {
+            public List<CertNodeResource> getResourcesForAllNodes(final String userQuery, final String resourceTag) {
                 return null;
             }
 
@@ -94,7 +94,7 @@ public class UT_Mapper_nested_null {
             }
 
             @Override
-            public List<NodeClass> getClassesForNode(final Node node) {
+            public List<NodeResource> getResourcesForNode(final Node node, final String resourceTag) {
                 return classes;
             }
         };

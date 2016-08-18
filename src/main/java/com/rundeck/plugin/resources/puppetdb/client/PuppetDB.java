@@ -26,7 +26,7 @@ public class PuppetDB {
     public ImmutableList<PuppetDBNode> getPuppetDBNodes(
             final List<Node> nodes,
             final List<NodeFact> factSet,
-            final List<CertNodeClass> nodeClasses
+            final List<CertNodeResource> nodeClasses
     )
     {
         return FluentIterable.from(nodes)
@@ -39,23 +39,23 @@ public class PuppetDB {
      *
      * @param node
      * @param facts
-     * @param nodeClasses1
+     * @param resources0
      *
      * @return
      */
     public PuppetDBNode getNodeWithFacts(
             final Node node,
             final List<NodeFact> facts,
-            final List<CertNodeClass> nodeClasses1
+            final List<CertNodeResource> resources0
     )
     {
         final List<NodeFact> newfacts = FluentIterable.from(facts).filter(certNameEqualsPredicate(node)).toList();
-        final List<CertNodeClass> classes = FluentIterable.from(nodeClasses1)
+        final List<CertNodeResource> resources = FluentIterable.from(resources0)
                                                           .filter(certNameEqualsPredicate(node))
                                                           .toList();
 
 
-        return new PuppetDBNode(node, newfacts, classes);
+        return new PuppetDBNode(node, newfacts, resources);
     }
 
     private Predicate<Certname> certNameEqualsPredicate(final Certname node) {
@@ -73,16 +73,15 @@ public class PuppetDB {
         };
     }
 
-
-    public PuppetDBNode getNodeWithFacts(final Node node) {
+    public PuppetDBNode getNodeWithFacts(final Node node, final String resourceTag) {
         final List<Fact> facts = puppetAPI.getFactsForNode(node);
-        final List<NodeClass> nodeClasses = puppetAPI.getClassesForNode(node);
+        final List<NodeResource> nodeClasses = puppetAPI.getResourcesForNode(node, resourceTag);
         return new PuppetDBNode(node, facts, nodeClasses);
     }
 
     public Function<Node, PuppetDBNode> queryNodeWithFacts(
             final List<NodeFact> facts,
-            final List<CertNodeClass> nodeClasses
+            final List<CertNodeResource> nodeClasses
     )
     {
         return new Function<Node, PuppetDBNode>() {
@@ -93,11 +92,11 @@ public class PuppetDB {
         };
     }
 
-    public Function<Node, PuppetDBNode> queryNode() {
+    public Function<Node, PuppetDBNode> queryNode(final String resourceTag) {
         return new Function<Node, PuppetDBNode>() {
             @Override
             public PuppetDBNode apply(final Node node) {
-                return getNodeWithFacts(node);
+                return getNodeWithFacts(node, resourceTag);
             }
         };
     }
