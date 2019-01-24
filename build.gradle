@@ -79,6 +79,14 @@ jar {
     manifest {
         def libList = configurations.pluginLibs.collect{'lib/'+it.name}.join(' ')
         attributes(
+                'Rundeck-Plugin-Name' : 'Rundeck Puppet Enterprise Nodes',
+                'Rundeck-Plugin-Description' : 'This is a plugin for Rundeck that provides Puppet Enterprise Nodes as nodes for the RunDeck server.',
+                'Rundeck-Plugin-Rundeck-Compatibility-Version': '2.0.0+',
+                'Rundeck-Plugin-Tags': 'java,resource model',
+                'Rundeck-Plugin-License': 'Apache 2.0',
+                'Rundeck-Plugin-Source-Link': 'https://github.com/rundeck-plugins/rundeck-puppetenterprise-nodes-plugin',
+                'Rundeck-Plugin-Target-Host-Compatibility': 'all',
+                'Rundeck-Plugin-Author': 'Rundeck, Inc.',
                 "Rundeck-Plugin-Version": rundeckPluginVersion,
                 "Rundeck-Plugin-File-Version": version,
                 "Rundeck-Plugin-Archive": "true",
