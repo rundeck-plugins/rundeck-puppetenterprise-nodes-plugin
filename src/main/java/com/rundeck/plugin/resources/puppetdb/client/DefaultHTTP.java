@@ -19,7 +19,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Function;
@@ -28,7 +29,7 @@ import com.google.common.base.Function;
  * Use apache http client
  */
 public class DefaultHTTP implements HTTP {
-    private static final Logger LOG = Logger.getLogger(DefaultHTTP.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultHTTP.class);
     private static final String HTTPS = "https";
     public static final String HTTP = "http";
     private static final String USERAGENT = "Rundeck Node Plugin";
