@@ -13,13 +13,15 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.rundeck.plugin.resources.puppetdb.Constants;
 import com.rundeck.plugin.resources.puppetdb.client.model.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class DefaultPuppetAPI implements PuppetAPI, Constants {
 
     private static final String UTF8 = StandardCharsets.UTF_8.toString();
     
-    private static final Logger LOG = Logger.getLogger(DefaultPuppetAPI.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultPuppetAPI.class);
 
 
     private final HTTP http;

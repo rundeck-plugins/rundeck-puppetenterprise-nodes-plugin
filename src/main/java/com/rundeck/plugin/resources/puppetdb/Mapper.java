@@ -40,7 +40,9 @@ import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.beanutils.NestedNullException;
 import org.apache.commons.beanutils.PropertyUtilsBean;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.dtolabs.rundeck.core.common.INodeEntry;
 import com.dtolabs.rundeck.core.common.NodeEntryImpl;
@@ -62,7 +64,7 @@ public class Mapper implements Constants {
             return input instanceof Map;
         }
     };
-    private static Logger log = Logger.getLogger(ResourceModelFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(ResourceModelFactory.class);
 
     private final PropertyUtilsBean propertyUtilsBean;
     private final Optional<String> defaultNodeTag;

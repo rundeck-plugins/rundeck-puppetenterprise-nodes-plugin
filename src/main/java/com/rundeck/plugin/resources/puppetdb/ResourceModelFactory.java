@@ -38,7 +38,8 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;
@@ -59,7 +60,7 @@ import com.rundeck.plugin.resources.puppetdb.client.PuppetDB;
 public class ResourceModelFactory implements ResourceModelSourceFactory, Describable, Constants {
 
     private static MetricRegistry METRICS = new MetricRegistry();
-    private static Logger log = Logger.getLogger(ResourceModelFactory.class);
+    private static Logger log = LoggerFactory.getLogger(ResourceModelFactory.class);
 
     private final Gson gson;
     private final MetricRegistry metrics;
